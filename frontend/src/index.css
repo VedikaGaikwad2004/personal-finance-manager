@@ -1,4 +1,3 @@
-
 *,
 ::before,
 ::after{
@@ -24,7 +23,7 @@ body{
 }
 
 .container{
-  background-color: #FFF;
+  background-color: #ffffffb9;
   padding: 32px 48px;
   border-radius: 10px;
   width: 100%;
@@ -62,7 +61,7 @@ body{
 }
 
 button{
-  background-color: rgb(4, 128, 0);
+  background-color: rgb(7, 92, 92);
   border: none;
   font-size: 15px;
   color: white;
@@ -124,4 +123,4 @@ button{
 .expense-amount{
   color: #c0392b;
   font-weight: bold;
-}
+} 
