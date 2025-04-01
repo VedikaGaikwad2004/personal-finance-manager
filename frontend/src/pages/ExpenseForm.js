@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { handleError } from '../utils';
 
-function ExpenseForm({ addTransaction }) {
+function ExpenseForm({ addTransaction, editExpense, clearEdit }) {
     const [expenseInfo, setExpenseInfo] = useState({
         text: '',
         amount: '',
-        type: 'Debit', // Default to Debit
+        type: 'Debit',
         date: ''
     });
+
+    useEffect(() => {
+        if (editExpense) {
+            setExpenseInfo(editExpense);
+        }
+    }, [editExpense]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setExpenseInfo(prev => ({ ...prev, [name]: value }));
     };
 
-    const addExpenses = (e) => {
+    const submitExpense = (e) => {
         e.preventDefault();
         const { text, amount, type, date } = expenseInfo;
 
@@ -24,20 +30,22 @@ function ExpenseForm({ addTransaction }) {
         }
 
         addTransaction({ text, amount: parseFloat(amount), type, date });
+        clearEdit(); // ✅ Clears edit mode after update
+
         setExpenseInfo({ text: '', amount: '', type: 'Debit', date: '' });
     };
 
     return (
         <div className='container'>
-            <h1>Personal Finance Manager Application</h1>
-            <form onSubmit={addExpenses}>
+            <h2>{editExpense ? 'Edit Transaction' : 'Add New Transaction'}</h2>
+            <form onSubmit={submitExpense}>
                 <div>
                     <label>Expense Detail</label>
-                    <input type='text' name='text' placeholder='Enter your Expense Detail...' value={expenseInfo.text} onChange={handleChange} />
+                    <input type='text' name='text' value={expenseInfo.text} onChange={handleChange} />
                 </div>
                 <div>
                     <label>Amount</label>
-                    <input type='number' name='amount' placeholder='Enter your Amount...' value={expenseInfo.amount} onChange={handleChange} />
+                    <input type='number' name='amount' value={expenseInfo.amount} onChange={handleChange} />
                 </div>
                 <div>
                     <label>Type</label>
@@ -50,12 +58,16 @@ function ExpenseForm({ addTransaction }) {
                     <label>Date</label>
                     <input type='date' name='date' value={expenseInfo.date} onChange={handleChange} />
                 </div>
-                <button type='submit'>Add Transaction</button>
+                <button type='submit'>{editExpense ? 'Update Transaction' : 'Add Transaction'}</button>
+                {editExpense && <button type="button" onClick={clearEdit} style={{ marginLeft: '10px' }}>Cancel</button>}
             </form>
         </div>
     );
 }
 
 export default ExpenseForm;
+
+
+
 
 

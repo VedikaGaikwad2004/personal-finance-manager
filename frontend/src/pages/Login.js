@@ -53,6 +53,7 @@ function Login() {
         <div className="bg-container">
             <div className="bg-overlay"></div> {/* Dark overlay for better visibility */}
             <div className='container'>
+                <h1> Personal Finance Manager Application</h1>
                 <h1>Login</h1>
                 <form onSubmit={handleLogin}>
                     <div>
